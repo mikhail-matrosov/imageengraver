@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from random import random
 
-INPUT_FILE = 'r_img12.jpg.npy'
+INPUT_FILE = 'r_marley.png.npy'
 
 def rndCol():
     return (int(255*random()), int(255*random()), int(255*random()))
