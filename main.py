@@ -11,7 +11,7 @@ import numpy as np
 from findPaths import *
 
 # PARAMETERS
-N = 20 # Number of intencity layers
+N = 10 # Number of intencity layers
 LINE_THICKNESS = 3 # Minimal distance between lines. Not recommended to make less then 3
 EROSION_MAX_DEPTH = 1000
 
@@ -73,7 +73,7 @@ def img2engrave(eq):
     return white
 
 def main():
-    inputImage = 'marley.png'
+    inputImage = 'robotucion.png'
     
     img = cv2.imread(inputImage).astype(np.float32)
     if len(img.shape)>2:

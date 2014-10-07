@@ -1,7 +1,7 @@
 from findPaths import *
 from animate import *
 
-inputImage = 'r_marley.png'
+inputImage = 'worldmap.png'
 
 img = cv2.imread(inputImage)
 
