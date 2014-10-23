@@ -58,7 +58,7 @@ def gotoXY(v, up=0):
     time.sleep(STEPDELAY)
     
 ser = None
-def connect():
+def connect(comPort=8):
     global ser
     
     try:
@@ -66,7 +66,7 @@ def connect():
     except:
         pass
     
-    ser = serial.Serial(8, baudrate=9600)
+    ser = serial.Serial(comPort, baudrate=9600)
     ser.setTimeout(0)
         
     print ser.name
@@ -85,10 +85,10 @@ def interpolate(stroke, speed):
     
     return np.array([s0,s1]).transpose()
 
-def animate(pathfile_filename):
+def animate(pathfile_filename, comPort):
     global scale
     
-    connect()
+    connect(comPort)
     
     #size,path = np.load('r_image_to_print.png.npy')
     size,path = np.load(pathfile_filename)

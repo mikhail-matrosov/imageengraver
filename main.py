@@ -72,29 +72,23 @@ def img2engrave(eq):
     
     return white
 
-def main():
-    inputImage = 'robotucion.png'
+def main(inputImage, layers=1):
     
     img = cv2.imread(inputImage).astype(np.float32)
     if len(img.shape)>2:
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     
-    #blurred = cv2.medianBlur(img, 5)
-    blurred = cv2.GaussianBlur(img, (0,0), 2)
-    #blurred = cv2.resize(blurred, (0,0), fx=0.5, fy=0.5) # Resize to reduce image size
-    
-    eq = blurred
-    #eq = cv2.equalizeHist(blurred)
-    #eq = blurred*2-128
-    #eq = cv2.min(cv2.max(eq, 0), 255)
-    
-    white = img2engrave(eq)
+    if layers:
+        eq = cv2.GaussianBlur(img, (0,0), 2)
+        white = img2engrave(eq)
+    else:
+        white = (img>150)*255
     
     cv2.imwrite('r_'+inputImage, white*255)
-    cv2.imshow('img', white)
     
-    cv2.waitKey(1000)
-    cv2.destroyAllWindows()
+    # cv2.imshow('img', white)
+    # cv2.waitKey(1000)
+    # cv2.destroyAllWindows()
     
     print 'Tracing lines...'
     paths = findPaths(white)
@@ -106,3 +100,5 @@ def main():
     np.save('r_'+inputImage, (eq.shape,paths))
     
     cv2.destroyAllWindows()
+    
+#main('aysilu.JPG')

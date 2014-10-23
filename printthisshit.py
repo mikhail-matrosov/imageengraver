@@ -1,20 +1,11 @@
-from findPaths import *
+from main import *
 from animate import *
 
-inputImage = 'worldmap.png'
+inputImage = 'depp.png'
 
-img = cv2.imread(inputImage)
-
-# binarize
-img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-white = (img>150)*255
-
-print 'Tracing lines...'
-paths = findPaths(white)
-np.save('r_'+inputImage, (white.shape,paths))
-print 'Done.'
-
-printPathStatistics(paths, white.shape)
+# layers=1 : trace several layers (MM style)
+# layers=0 : trace single lines (Boyko style)
+main(inputImage, layers=1)
 
 print 'Now printing.'
-animate('r_'+inputImage+'.npy')
+animate('r_'+inputImage+'.npy', comPort=8)
