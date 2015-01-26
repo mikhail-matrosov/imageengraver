@@ -2,12 +2,10 @@ import cv2
 import numpy as np
 from random import random
 
-INPUT_FILE = 'r_marley.png.npy'
-
 def rndCol():
     return (int(255*random()), int(255*random()), int(255*random()))
 
-def drawPath(img, paths, thickness):
+def drawPath(img, paths, thickness, drawJumps=1):
     
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB) 
     
@@ -18,19 +16,23 @@ def drawPath(img, paths, thickness):
         #cv2.circle(img, ps[0], 3, (255,0,0))
         #cv2.circle(img, ps[-1], 2, (0,0,255))
 
-    for i in range(len(paths)-1):
-        p1 = tuple(paths[i][-1])
-        p2 = tuple(paths[i+1][0])
-        cv2.line(img, p1, p2, rndCol(), thickness)
+    # jumps
+    if drawJumps:
+        for i in range(len(paths)-1):
+            p1 = tuple(paths[i][-1])
+            p2 = tuple(paths[i+1][0])
+            cv2.line(img, p1, p2, rndCol(), thickness)
     
     return img
-            
-data = np.load(INPUT_FILE)
 
-img = (np.ones(data[0])*255).astype(np.uint8)
-img = drawPath(img, data[1], 2)
 
-cv2.imwrite('p_'+INPUT_FILE[:-4], img)
-cv2.imshow('result', img)
-cv2.waitKey(1000)
-cv2.destroyAllWindows()
+def plot_from_file(INPUT_FILE, drawJumps=1):
+    data = np.load(INPUT_FILE)
+    
+    img = (np.ones(data[0])*255).astype(np.uint8)
+    img = drawPath(img, data[1], 1, drawJumps)
+    
+    cv2.imwrite(INPUT_FILE+'_p.png', img)
+    cv2.imshow('result', img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

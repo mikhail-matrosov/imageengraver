@@ -59,6 +59,7 @@ y0 = 272
 #    return (alpha, beta)
 
 def ik(R):
+    #this is an approximate simple analytic calculator for inverse kinematics
     x = R[0] - x0
     y = R[1] - y0
     

@@ -2,13 +2,13 @@ import numpy as np
 #written by Alexey Boyko
 #GNU
 
-#rectangular coords
+#rectangular coords of a sample square
 X=[60,60,240,240]
 Y=[60,180,60,180]
     
-#irregular coords
-x=[50,45,230,230]
-y=[55,175,40,140]
+#irregular coords of a sample square
+x=[50,45,212,212] #50 45 230 230
+y=[55,175,42,140] #55 175 40 140
 
 M=np.matrix([[x[0],y[0],1,0,0,0,-x[0]*X[0],-y[0]*X[0]],
              [x[1],y[1],1,0,0,0,-x[1]*X[1],-y[1]*X[1]],
@@ -23,6 +23,7 @@ MMM=np.linalg.pinv(M)
 a=np.dot(MMM,(X+Y)).tolist()[0]
 
 def antiWarp(inP):
+    #this function recalculates a point in original space in a point in a fixed space
     global x,y,X,Y
     
     inX,inY=inP[0],inP[1]

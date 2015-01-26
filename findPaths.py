@@ -54,13 +54,16 @@ def removeDoubles(img, paths):
     #                cv2.line(z, ps[i], ps[i+1], (1,)*3, 1)
 
 def sortPaths(paths):
+    if len(paths)==0:
+        return []
+    
     p = paths.pop()
     firsts = map(lambda p: p[0], paths)
     lasts = map(lambda p: p[-1], paths)
     
     pathsSorted = []
     while len(paths)>0:
-        # find the closes another end
+        # find the closest another end
         df = np.linalg.norm(firsts-p[-1],2,1)
         dl = np.linalg.norm(lasts-p[-1],2,1)
         
@@ -85,9 +88,7 @@ def findPaths(img):
     
     # there's also workaround the fact, that path is traced in both directions
     paths = [p.squeeze() for p in q if p.shape[0]>4]
-    
     paths = removeDoubles(img, paths)
-    
     paths = sortPaths(paths)
     
     # connect broken paths
